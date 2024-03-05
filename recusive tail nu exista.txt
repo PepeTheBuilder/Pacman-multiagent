@@ -1,0 +1,36 @@
+
+"""
+directionsDFS = []
+visited = []
+done = False
+"""
+def dfsRecursive(node, problem, directions):
+    visited, done = set(), [False]
+
+    def recursive_helper(node):
+        visited.add(node[0])
+
+        if problem.isGoalState(node[0]):
+            done[0] = True
+            return
+
+        neighbors = problem.getSuccessors(node[0])
+
+        for neighbor in neighbors:
+            if neighbor[0] not in visited and not done[0]:
+                recursive_helper(neighbor)
+                if done[0]:
+                    directions.insert(0, node[1])
+
+    recursive_helper(node)
+
+def depthFirstSearch(problem):
+    aux = (problem.getStartState(), "South", 1)
+
+    if problem.isGoalState(problem.getStartState()):
+        return []
+
+    directionsDFS = []
+    dfsRecursive(aux, problem, directionsDFS)
+    directionsDFS.pop(0)
+    return directionsDFS
